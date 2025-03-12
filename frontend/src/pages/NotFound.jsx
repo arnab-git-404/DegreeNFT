@@ -17,7 +17,7 @@ export const NotFound = () => {
           </h2>
           
           <p className="text-gray-600 text-lg mb-8">
-            Oops! The page you're looking for doesn't seem to exist in our blockchain.
+            Oops! The page you're looking for doesn't seem to exist in our Platform.
           </p>
           
           <Link

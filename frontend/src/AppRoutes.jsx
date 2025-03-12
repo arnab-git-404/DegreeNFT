@@ -39,8 +39,7 @@ const University = () => {
                 {/* <Route path="/dashboard" element={<Dashboard />} /> */}
                 {/* <Route path="/mint" element={<MintNFT />} /> */}
                 {/* <Route path="/profile/:id" element={<Profile />} /> */}
-                <Route path="/404" element={<NotFound />} />
-                <Route path="*" element={<Navigate to="/404" replace />} />
+                <Route path="*" element={<NotFound/>} />
             </Routes>
         
     );
