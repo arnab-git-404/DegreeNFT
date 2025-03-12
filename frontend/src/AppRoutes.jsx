@@ -6,10 +6,36 @@ import { NotFound } from './pages/NotFound';
 
 const AppRoutes = () => {
     
+    const Verify = () => {
+        return (
+            <div>
+                <h1>Verify</h1>
+            </div>
+        );
+    };
+    const Student = () => {
+        return (
+            <div>
+                <h1>Student</h1>
+            </div>
+        );
+    };
+
+const University = () => {
+    return (
+        <div>
+            <h1>University</h1>
+        </div>
+    );
+};
+
     return (
        
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/verify" element={<Verify />} />
+                <Route path="/student" element={<Student />} />
+                <Route path="/university" element={<University />} />
                 {/* <Route path="/dashboard" element={<Dashboard />} /> */}
                 {/* <Route path="/mint" element={<MintNFT />} /> */}
                 {/* <Route path="/profile/:id" element={<Profile />} /> */}
