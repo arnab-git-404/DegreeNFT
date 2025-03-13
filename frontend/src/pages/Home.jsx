@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import { GraduationCap, School, UserCheck, Shield } from 'lucide-react';
+import {Button} from '../components/Button';
+
 
 export function Home() {
   return (
@@ -17,11 +19,11 @@ export function Home() {
         <div className="mt-10 flex justify-center gap-4">
           <Link to="/university">
             
-            <button className=' text-lg hover:cursor-pointer ' >For Universities</button>
+            <Button className=' text-lg hover:cursor-pointer ' >For Universities</Button>
           </Link>
           <Link to="/student">
             
-            <button className='text-lg hover:cursor-pointe ' >For Students</button>
+            <Button className='text-lg hover:cursor-pointer ' >For Students</Button>
           </Link>
         </div>
       </section>

@@ -3,39 +3,21 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navigate } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { NotFound } from './pages/NotFound';
+import { UniversityDashboard } from './pages/UniversityDashboard';
+import { VerificationPortal } from './pages/VerificationPortal';
+import { StudentDashboard } from './pages/StudentDashboard';
+
 
 const AppRoutes = () => {
     
-    const Verify = () => {
-        return (
-            <div>
-                <h1>Verify</h1>
-            </div>
-        );
-    };
-    const Student = () => {
-        return (
-            <div>
-                <h1>Student</h1>
-            </div>
-        );
-    };
-
-const University = () => {
-    return (
-        <div>
-            <h1>University</h1>
-        </div>
-    );
-};
 
     return (
        
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/verify" element={<Verify />} />
-                <Route path="/student" element={<Student />} />
-                <Route path="/university" element={<University />} />
+                <Route path="/verify" element={<VerificationPortal />} />
+                <Route path="/student" element={<StudentDashboard />} />
+                <Route path="/university" element={<UniversityDashboard />} />
                 {/* <Route path="/dashboard" element={<Dashboard />} /> */}
                 {/* <Route path="/mint" element={<MintNFT />} /> */}
                 {/* <Route path="/profile/:id" element={<Profile />} /> */}
