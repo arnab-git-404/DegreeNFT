@@ -11,6 +11,8 @@ import { Button } from '../components/Button';
 export function StudentDashboard() {
   const { connected, publicKey } = useWallet();
   
+  console.log(publicKey?.toBase58());
+
   if (!connected) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center text-center">

@@ -25,6 +25,7 @@ const App = () => {
           <WalletModalProvider>
             <Router>
               <Layout>
+                
                 <AppRoutes />
                
               </Layout>

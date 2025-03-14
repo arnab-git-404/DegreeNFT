@@ -6,7 +6,7 @@ import { NotFound } from './pages/NotFound';
 import { UniversityDashboard } from './pages/UniversityDashboard';
 import { VerificationPortal } from './pages/VerificationPortal';
 import { StudentDashboard } from './pages/StudentDashboard';
-
+import { BatchUploadPortal } from './pages/BatchUploadPortal';
 
 const AppRoutes = () => {
     
@@ -18,6 +18,7 @@ const AppRoutes = () => {
                 <Route path="/verify" element={<VerificationPortal />} />
                 <Route path="/student" element={<StudentDashboard />} />
                 <Route path="/university" element={<UniversityDashboard />} />
+                <Route path="/batch-upload" element={<BatchUploadPortal />} />
                 {/* <Route path="/dashboard" element={<Dashboard />} /> */}
                 {/* <Route path="/mint" element={<MintNFT />} /> */}
                 {/* <Route path="/profile/:id" element={<Profile />} /> */}

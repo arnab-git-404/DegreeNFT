@@ -5,8 +5,8 @@ import {Button} from '../components/Button';
 
 export function Home() {
   return (
-    <div className="space-y-20">
-      <section className="py-20 text-center">
+    <div className="space-y-10  ">
+      <section className="py-10 text-center">
         <GraduationCap className="mx-auto h-20 w-20 text-indigo-500" />
         <h1 className="mt-8 text-4xl font-bold sm:text-6xl">
           Secure Academic Credentials

@@ -1,7 +1,6 @@
 // 4th Edition 
 import { Connection, clusterApiUrl, PublicKey, LAMPORTS_PER_SOL, Keypair } from '@solana/web3.js';
 
-// import { Metaplex } from '@metaplex-foundation/js'; 
 
 import { Buffer } from 'buffer';
 
@@ -152,7 +151,6 @@ export const calculateMintingCost = async () => {
 //   calculateMintingCost,
 //   isValidPublicKey
 // } from './solana-metaplex-utils';
-// import { Metaplex } from '@metaplex-foundation/js';
 
 // const DegreeNFTForm = () => {
 //   const { publicKey, signTransaction } = useWallet();
@@ -458,7 +456,6 @@ export const calculateMintingCost = async () => {
 
 // 2nd Edition 
 // import { Connection, clusterApiUrl, PublicKey, LAMPORTS_PER_SOL, Keypair } from '@solana/web3.js';
-// import { Metaplex } from '@metaplex-foundation/js';
 // import { Buffer } from 'buffer';
 
 // // Polyfill Buffer for the browser
