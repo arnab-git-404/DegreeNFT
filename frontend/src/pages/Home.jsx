@@ -36,13 +36,18 @@ export function Home() {
             Issue tamper-proof digital credentials as non-transferable NFTs on the Solana blockchain.
           </p>
         </div>
+
         <div className="rounded-lg border border-gray-700 bg-gray-800/50 p-6">
+          
           <UserCheck className="h-12 w-12 text-indigo-500" />
           <h3 className="mt-4 text-xl font-semibold">For Students</h3>
+
           <p className="mt-2 text-gray-400">
             Receive and manage your academic credentials in your Solana wallet.
           </p>
         </div>
+        
+        
         <div className="rounded-lg border border-gray-700 bg-gray-800/50 p-6">
           <Shield className="h-12 w-12 text-indigo-500" />
           <h3 className="mt-4 text-xl font-semibold">Verification</h3>

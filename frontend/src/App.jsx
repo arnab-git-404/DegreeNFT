@@ -13,6 +13,7 @@ import "@solana/wallet-adapter-react-ui/styles.css";
 import AppRoutes from "./AppRoutes";
 
 const App = () => {
+  
   // Set up Solana testnet connection
   const network = WalletAdapterNetwork.Testnet;
   const endpoint = clusterApiUrl(network);

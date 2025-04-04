@@ -42,6 +42,8 @@ export function Navbar() {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-6">
+
+
               {navLinks.map((link) => (
                 <Link
                   key={link.path}
@@ -52,6 +54,7 @@ export function Navbar() {
                   <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gray-300 group-hover:bg-indigo-500 group-hover:w-full group-hover:left-0 transition-all duration-300 transform -translate-x-1/2 group-hover:translate-x-0"></span>
                 </Link>
               ))}
+
 
               <div className="hidden md:block">
                 <WalletButton />
@@ -152,6 +155,8 @@ export function Navbar() {
           <div className="p-4 border-t border-gray-700 text-white ">
             <p className="text-center font-semibold ">DegreeNFT</p>
           </div>
+
+          
         </div>
       </div>
     </>
