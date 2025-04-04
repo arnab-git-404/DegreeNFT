@@ -23,9 +23,14 @@ export function VerificationPortal() {
 
     setIsLoading(true);
     try {
+      
       // TODO: Implement verification logic
       await new Promise(resolve => setTimeout(resolve, 2000)); // Simulated delay
       setVerificationResult('valid');
+      toast.success("Verified! Go to View on Solana Explorer For Detalis", {
+      duration: 8000,
+      });
+      
     } catch (error) {
       console.error('Error verifying credential:', error);
       setVerificationResult('invalid');
@@ -55,7 +60,7 @@ export function VerificationPortal() {
           <Button
             type="submit"
             disabled={!isValidPublicKey(address) || isLoading}
-            className="w-full"
+            className="hover:cursor-pointer w-full"
           >
             {isLoading ? (
               <>Verifying...</>
@@ -100,7 +105,7 @@ export function VerificationPortal() {
                  onClick={() => {
                   navigator.clipboard.writeText("FYYAm8NKgaShjzFkdi5rVY5TC47jeSKpo7PxEgHBPFDz");
                   toast.success("Address copied to clipboard! ", {
-                    duration: 2000,
+                    duration: 3000,
                     // icon: "📋"
                     });
                 }}
@@ -109,7 +114,7 @@ export function VerificationPortal() {
                 rel="noopener noreferrer"
                 className=" hover:cursor-pointer text-sm text-indigo-400 hover:text-indigo-300"
               >
-                Example NFT Address: {"FYYAm8NKgaShjzFkdi5rVY5TC47jeSKpo7PxEgHBPFDz"}
+                Example DegreeNFT Address: {"FYYAm8NKgaShjzFkdi5rVY5TC47jeSKpo7PxEgHBPFDz"}
                <Copy className="ml-2 inline h-4 w-4"/>
                 
     
