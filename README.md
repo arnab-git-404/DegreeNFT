@@ -1,4 +1,4 @@
-# DegreeNFT
+# DegreeNFT ( The software is still in the early stages of development )
 
 A blockchain-based solution for issuing, managing, and verifying academic credentials as Non-Fungible Tokens (NFTs).
 
@@ -16,16 +16,19 @@ DegreeNFT leverages blockchain technology to create tamper-proof digital academi
 
 ## Tech Stack
 
-- Solidity (Smart Contracts)
-- Ethereum Blockchain
+- Solana Blockchain
+- solana/spl-token
+- metaplex
 - IPFS (for certificate metadata storage)
 - Web3.js
 - React (Front-end)
+- TailwindCss
+  
 
 ## Installation
 
 ```
-git clone https://github.com/yourusername/DegreeNFT.git
+git clone https://github.com/arnab-git-404/DegreeNFT.git
 cd DegreeNFT
 npm install
 ```
