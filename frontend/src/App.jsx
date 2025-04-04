@@ -11,6 +11,9 @@ import { clusterApiUrl } from "@solana/web3.js";
 import { Layout } from "./components/Layout";
 import "@solana/wallet-adapter-react-ui/styles.css";  
 import AppRoutes from "./AppRoutes";
+import{ Toaster } from 'react-hot-toast';
+
+
 
 const App = () => {
   
@@ -25,6 +28,7 @@ const App = () => {
         <WalletProvider wallets={wallets} autoConnect>
           <WalletModalProvider>
             <Router>
+              <Toaster/>
               <Layout>
                 
                 <AppRoutes />

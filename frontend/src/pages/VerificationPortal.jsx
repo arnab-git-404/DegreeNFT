@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Shield, Search, CheckCircle, XCircle, ExternalLink } from 'lucide-react';
+import { Shield, Search, CheckCircle, XCircle, ExternalLink , Copy } from 'lucide-react';
 // import { isValidPublicKey } from '@/lib/solana';
 // import { getExplorerUrl } from '@/lib/solana';
 // import { isValidPublicKey } from '@/lib/solana';
@@ -9,7 +9,7 @@ import { isValidPublicKey } from '../lib/solana';
 import { getExplorerUrl } from '../lib/solana';
 import { Input } from '../components/Input';
 import { Button } from '../components/Button';
-
+import { toast } from 'react-hot-toast';
 
 export function VerificationPortal() {
   const [address, setAddress] = useState('');
@@ -81,6 +81,8 @@ export function VerificationPortal() {
                 <span>Invalid credential</span>
               </div>
             )}
+
+
             <div className="mt-4">
               <a
                 href={getExplorerUrl(address)}
@@ -92,6 +94,30 @@ export function VerificationPortal() {
                 <ExternalLink className="ml-1 inline h-4 w-4" />
               </a>
             </div>
+
+            <div className="mt-4">
+               <a
+                 onClick={() => {
+                  navigator.clipboard.writeText("FYYAm8NKgaShjzFkdi5rVY5TC47jeSKpo7PxEgHBPFDz");
+                  toast.success("Address copied to clipboard! ", {
+                    duration: 2000,
+                    // icon: "📋"
+                    });
+                }}
+
+                title="Copy This address & Paste it in the input field"
+                rel="noopener noreferrer"
+                className=" hover:cursor-pointer text-sm text-indigo-400 hover:text-indigo-300"
+              >
+                Example NFT Address: {"FYYAm8NKgaShjzFkdi5rVY5TC47jeSKpo7PxEgHBPFDz"}
+               <Copy className="ml-2 inline h-4 w-4"/>
+                
+    
+              </a>
+
+            </div>
+              
+
           </div>
         )}
       </div>
