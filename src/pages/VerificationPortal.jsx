@@ -28,7 +28,7 @@ export function VerificationPortal() {
       await new Promise(resolve => setTimeout(resolve, 2000)); // Simulated delay
       setVerificationResult('valid');
       toast.success("Verified! Go to View on Solana Explorer For Detalis", {
-      duration: 8000,
+      duration: 5000,
       });
       
     } catch (error) {
