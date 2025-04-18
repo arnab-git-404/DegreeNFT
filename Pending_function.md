@@ -1,5 +1,7 @@
 # Pening Task 
 
+* Batch Uploading is not working properly
+* check mongoDB URL in backend vercel
 1. implement Cheking Confirm OR not for multiple NFTs
 2. create admin pannel for manage all services.
 3. create edit portal for university/colleges
