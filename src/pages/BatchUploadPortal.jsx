@@ -122,7 +122,6 @@ import { useNavigate } from "react-router-dom";
 
 export function BatchUploadPortal() {
 
-  const API_BASE_URL = import.meta.env.VITE_APP_SERVER_URL;
 
   const { connected, publicKey } = useWallet();
   const { isLoading, setCurrentIpfsHash } = useSolana();
@@ -131,6 +130,8 @@ export function BatchUploadPortal() {
   // Add Pinata API configuration
   const PINATA_API_KEY = import.meta.env.VITE_APP_PINATA_API_KEY;
   const PINATA_SECRET_KEY = import.meta.env.VITE_APP_PINATA_API_SECRET;
+  const API_BASE_URL = import.meta.env.VITE_APP_SERVER_URL;
+
 
   // State management
   const [file, setFile] = useState(null);
@@ -329,7 +330,7 @@ export function BatchUploadPortal() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5001/api/create-nft-ipfsHash-allocation",
+        `${API_BASE_URL}/create-nft-ipfsHash-allocation`,
         {
           studentWallet: studentData.studentAddress,
           universityWallet: publicKey.toString(),
