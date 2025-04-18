@@ -9,7 +9,6 @@ import { StudentDashboard } from './pages/StudentDashboard';
 import { BatchUploadPortal } from './pages/BatchUploadPortal';
 
 const AppRoutes = () => {
-    
 
     return (
        
