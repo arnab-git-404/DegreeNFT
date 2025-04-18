@@ -20,15 +20,6 @@ if (typeof window !== 'undefined') {
 export const SOLANA_NETWORK = 'devnet';
 export const SOLANA_CONNECTION = new Connection(clusterApiUrl(SOLANA_NETWORK));
 
-// Initialize Metaplex with a dummy keypair for read-only operations
-// This will be replaced with the actual wallet when performing transactions
-
-// const dummyKeypair = Keypair.generate();
-// export const metaplex = new Metaplex(SOLANA_CONNECTION).use({
-//   identity: dummyKeypair,
-//   cluster: 'devnet'
-// });
-
 
 
 /**
