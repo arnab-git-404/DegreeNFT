@@ -12,6 +12,10 @@ import { Button } from '../components/Button';
 import { toast } from 'react-hot-toast';
 
 export function VerificationPortal() {
+
+  const API_BASE_URL = import.meta.env.VITE_APP_SERVER_URL;
+
+
   const [address, setAddress] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
