@@ -9,5 +9,14 @@ export default defineConfig({
     tailwindcss(),
     react(),
   ],
+  resolve: {
+    alias: {
+      stream: 'stream-browserify', // Alias stream to stream-browserify
+    },
+  },
+  optimizeDeps: {
+    include: ['stream'], // Ensure stream is bundled during development
+  },
   base: "",
 })
+
