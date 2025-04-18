@@ -22,6 +22,7 @@ import { fromJSON } from "postcss";
 
 export function UniversityDashboard() {
 
+  
 
   // Add Pinata API configuration
   const PINATA_API_KEY = import.meta.env.VITE_APP_PINATA_API_KEY;
