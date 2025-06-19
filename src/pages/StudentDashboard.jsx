@@ -1228,16 +1228,15 @@ export function StudentDashboard() {
 
       const response = await axios.post(`${API_BASE_URL}/report-issue`, {
         
-        //  universityWallet: we need to extract this from the NFT uri or metadata. So Do it Later
-        // universityWallet: nftInfo.creators?.[0]?.address || "",
-        
+        //  universityWallet: we need to extract this from the NFT uri or metadata. So Do it Later || Done (9.17PM , 19.06.2025)
+        universityWallet: nftUriData.properties.creators[0].universityWalletAddress || "",
         studentWallet: walletAddress,
         nftIpfsHash: nftInfo.uri,
         reportType: "NFT Credential Issue",
         reportDetails: issueDescription.trim(),
       });
 
-        console.log("University Wallet:", nftUriData.properties.creators[0].address);
+        console.log("University Wallet:", nftUriData.properties.creators[0].universityWalletAddress);
 
 
       // Handle if the user has already reported an issue
