@@ -28,12 +28,15 @@ export function VerificationPortal() {
     setIsLoading(true);
     try {
       
+
       // TODO: Implement verification logic
       await new Promise(resolve => setTimeout(resolve, 2000)); // Simulated delay
       setVerificationResult('valid');
       toast.success("Verified! Go to View on Solana Explorer For Detalis", {
       duration: 5000,
       });
+
+      
       
     } catch (error) {
       console.error('Error verifying credential:', error);
