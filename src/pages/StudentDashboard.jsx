@@ -766,7 +766,7 @@
 //   );
 // }
 
-import React, { useState, useEffect, useMemo , useRef} from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Connection, clusterApiUrl } from "@solana/web3.js";
 import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
@@ -804,11 +804,9 @@ export function StudentDashboard() {
   const wallet = useWallet();
   const connection = new Connection(clusterApiUrl("devnet"));
 
-  
   const { connected, publicKey } = wallet;
   const walletAddress = publicKey?.toBase58();
   const toastShownRef = useRef(false);
-  
 
   const [isLoading, setIsLoading] = useState(false);
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -886,9 +884,7 @@ export function StudentDashboard() {
 
   // Fetch authorization status when wallet connects or changes
   useEffect(() => {
-    
     const checkAuthorization = async () => {
-
       if (!connected || !walletAddress) {
         resetStates();
         return;
@@ -906,7 +902,6 @@ export function StudentDashboard() {
           setIsAuthorized(true);
           setNftInfo(response.data.nftInfo);
 
-          
           if (response.data.existingReport) {
             setAlreadyReported(true);
           }
@@ -926,7 +921,6 @@ export function StudentDashboard() {
             toast.success("Found credentials ready to review!");
             toastShownRef.current = true;
           }
-
         } else {
           setIsAuthorized(false);
           setNftInfo(null);
@@ -970,11 +964,10 @@ export function StudentDashboard() {
       setMintError("");
     };
 
-    // 
-    
+    checkAuthorization();
+
     if (connected && walletAddress) {
       fetchMintedNFTs();
-       checkAuthorization();
     }
   }, [connected, walletAddress]);
 
@@ -982,7 +975,7 @@ export function StudentDashboard() {
   const handleConfirm = async () => {
     if (!walletAddress || !nftInfo) return;
 
-    if (alreadyReported){
+    if (alreadyReported) {
       toast.error("You have already reported an issue for this credential.");
       return;
     }
@@ -1076,7 +1069,6 @@ export function StudentDashboard() {
     const mintToastId = toast.loading("Minting your credential NFT...");
 
     try {
-      
       await umi.use(mplTokenMetadata());
 
       const mint = generateSigner(umi);
@@ -1197,9 +1189,8 @@ export function StudentDashboard() {
         "You've already reported an issue about this credential. Please contact your university for further assistance."
       );
     } else {
-    setIsReportingIssue(true);
+      setIsReportingIssue(true);
     }
-  
   };
 
   // Handle canceling issue report
@@ -1210,7 +1201,6 @@ export function StudentDashboard() {
 
   // Handle submitting the issue
   const handleSubmitIssue = async () => {
-
     if (!walletAddress || !nftInfo || !issueDescription.trim()) {
       toast.error("Please provide a description of the issue");
       return;
@@ -1219,15 +1209,12 @@ export function StudentDashboard() {
     setIsSendingIssue(true);
 
     try {
-
       // Fetch NFT data from Pinata
       const nftUriDataFromPinata = await fetch(nftInfo.uri);
       const nftUriData = await nftUriDataFromPinata.json();
       // console.log("NFT Data:", nftUriData);
-      
 
       const response = await axios.post(`${API_BASE_URL}/report-issue`, {
-        
         //  universityWallet: we need to extract this from the NFT uri or metadata. So Do it Later || Done (9.17PM , 19.06.2025)
         universityWallet: nftUriData.properties.creators[0].universityWalletAddress || "",
         studentWallet: walletAddress,
@@ -1236,8 +1223,10 @@ export function StudentDashboard() {
         reportDetails: issueDescription.trim(),
       });
 
-        console.log("University Wallet:", nftUriData.properties.creators[0].universityWalletAddress);
-
+      console.log(
+        "University Wallet:",
+        nftUriData.properties.creators[0].universityWalletAddress
+      );
 
       // Handle if the user has already reported an issue
       if (response.status === 409) {
@@ -1250,12 +1239,9 @@ export function StudentDashboard() {
         setIssueDescription("");
         setAlreadyReported(true);
         toast.success("Issue reported Successfully! Contact Your university.");
-
       } else {
         toast.error(response.data.message || "Failed to report issue");
       }
-
-
     } catch (error) {
       console.error("Error reporting issue:", error);
       toast.error("Failed to report issue. Please try again.");
@@ -1313,11 +1299,12 @@ export function StudentDashboard() {
       {mintSuccess && mintedNft && (
         <div className="rounded-md border border-green-600 bg-green-900/30 p-4 animate-fadeIn">
           <div className="flex items-center space-x-3">
-            <CheckCircle className="h-5 w-5 text-green-400" />
             <div>
-              <p className="font-medium text-green-300">
-                NFT Minted Successfully!
+              <p className="font-semibold text-2xl text-green-300 flex items-center gap-2">
+                <CheckCircle className="h-6 w-6 text-green-400" />
+                <span>NFT Minted Successfully!</span>
               </p>
+
               <div className="mt-2 flex space-x-4">
                 <a
                   href={getNftExplorerLink(
@@ -1331,18 +1318,13 @@ export function StudentDashboard() {
                 >
                   View NFT <ExternalLink className="ml-1 h-4 w-4" />
                 </a>
-                <a
-                  href={getNftExplorerLink(
-                    mintedNft.address,
-                    mintedNft.signature,
-                    "transaction"
-                  )}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center text-sm text-green-400 hover:text-green-300 underline cursor-pointer"
+
+                <p
+                  className=" hover:cursor-pointer inline-flex items-center text-sm text-green-400 hover:text-green-300 underline cursor-pointer"
+                  onClick={() => window.location.reload()}
                 >
-                  View Transaction <ExternalLink className="ml-1 h-4 w-4" />
-                </a>
+                  Reload Page
+                </p>
               </div>
             </div>
           </div>
@@ -1522,34 +1504,29 @@ export function StudentDashboard() {
                 {!isConfirmed && !timeRemaining?.expired && (
                   <>
                     <Button
-
                       disabled={isSavingChanges}
-
-                      onClick={ handleConfirm }
-
+                      onClick={handleConfirm}
                       className="cursor-pointer hover:bg-green-600 bg-green-700 transition-colors flex items-center"
-
-                      { ...alreadyReported ? {
-                        title: "You have already reported an issue for this credential. Please contact your university for further assistance."
-                      } : {
-                        title: "Confirm that, the above details are correct"
-                    }}
-
+                      {...(alreadyReported
+                        ? {
+                            title:
+                              "You have already reported an issue for this credential. Please contact your university for further assistance.",
+                          }
+                        : {
+                            title:
+                              "Confirm that, the above details are correct",
+                          })}
                     >
                       {isSavingChanges ? (
-
                         <>
                           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                           Confirming...
                         </>
-                      
-                    ) : (
-
+                      ) : (
                         <>
                           <CheckCircle className="mr-2 h-4 w-4" />
                           Confirm Details
                         </>
-                      
                       )}
                     </Button>
 
@@ -1620,7 +1597,7 @@ export function StudentDashboard() {
         <div className="rounded-lg border border-gray-700 bg-gray-800/50 p-6">
           <h3 className="text-xl font-semibold flex items-center">
             <Calendar className="mr-2 h-5 w-5 text-gray-400" />
-            Pending Credentials : { nftInfo ? nftInfo.length  : "None"}
+            Pending Credentials : {nftInfo ? nftInfo.length : "None"}
           </h3>
           <div className="mt-4">
             <p className="text-gray-400">
