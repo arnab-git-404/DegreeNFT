@@ -1,8 +1,8 @@
 # Pening Task 
 
-* Batch Uploading is not working properly
-* check mongoDB URL in backend vercel
-1. implement Cheking Confirm OR not for multiple NFTs
+* Batch Uploading is not working properly | Done
+* check mongoDB URL in backend vercel | Done
+1. implement Cheking Confirm OR not for multiple NFTs | Done (2:06pm,15.06.2025)
 2. create admin pannel for manage all services.
 3. create edit portal for university/colleges
 4. improve the verification portal.
