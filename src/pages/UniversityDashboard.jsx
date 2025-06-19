@@ -33,6 +33,9 @@ export function UniversityDashboard() {
   const { publicKey } = useWallet();
   const navigate = useNavigate();
 
+
+
+
   const {
     connected,
     isValidPublicKey,
@@ -113,8 +116,7 @@ export function UniversityDashboard() {
 
         creators: [
           {
-            address: "29peNqmLi7xRtQfyiibo4WTKwRDS9hWQ93iFZxq2YTPj",
-            share: 100,
+            universityWalletAddress: `${publicKey.toString()}`,
           },
         ],
         
