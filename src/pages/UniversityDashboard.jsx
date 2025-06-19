@@ -113,7 +113,7 @@ export function UniversityDashboard() {
 
         creators: [
           {
-            address: `University Wallet Address : ${publicKey?.toString()} => 29peNqmLi7xRtQfyiibo4WTKwRDS9hWQ93iFZxq2YTPj `,
+            address: "29peNqmLi7xRtQfyiibo4WTKwRDS9hWQ93iFZxq2YTPj",
             share: 100,
           },
         ],
