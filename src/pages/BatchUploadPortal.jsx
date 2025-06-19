@@ -523,7 +523,7 @@ export function BatchUploadPortal() {
         </div>
         <Button
           variant="outline"
-          onClick={() => navigate("/dashboard")}
+          onClick={() => navigate("/university")}
           className="flex items-center gap-2"
         >
           <ArrowLeft className="h-4 w-4" />
@@ -984,7 +984,7 @@ export function BatchUploadPortal() {
                 Start New Batch
               </Button>
               <Button
-                onClick={() => navigate("/dashboard")}
+                onClick={() => navigate("/university")}
                 className="flex items-center gap-2"
               >
                 Return to Dashboard
