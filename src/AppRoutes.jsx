@@ -7,7 +7,7 @@ import { UniversityDashboard } from './pages/UniversityDashboard';
 import { VerificationPortal } from './pages/VerificationPortal';
 import { StudentDashboard } from './pages/StudentDashboard';
 import { BatchUploadPortal } from './pages/BatchUploadPortal';
-import { Faucet } from './pages/Faucet'; 
+import { Faucet } from './pages/Faucet';
 
 const AppRoutes = () => {
 
