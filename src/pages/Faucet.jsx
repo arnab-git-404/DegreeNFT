@@ -61,6 +61,10 @@ export function Faucet() {
       toast.success('Airdrop successful! Your balance will update shortly.', { id: toastId });
       // Refresh balance after a short delay
       setTimeout(fetchBalance, 2000);
+
+      await new Promise(resolve => setTimeout(resolve, 2000)); 
+      toast.success('Balance updated!', { id: toastId });
+
     } catch (error) {
       console.error('Airdrop failed:', error);
       let errorMessage = 'Airdrop failed. Please try again later.';
