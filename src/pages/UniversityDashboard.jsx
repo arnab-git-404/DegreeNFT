@@ -21,20 +21,14 @@ import axios from "axios";
 import { fromJSON } from "postcss";
 
 export function UniversityDashboard() {
-
-  
-
   // Add Pinata API configuration
   const PINATA_API_KEY = import.meta.env.VITE_APP_PINATA_API_KEY;
   const PINATA_SECRET_KEY = import.meta.env.VITE_APP_PINATA_API_SECRET;
   const API_BASE_URL = import.meta.env.VITE_APP_SERVER_URL;
-  const EXTERNAL_API_URL = "https://degree-nft.vercel.app/" 
+  const EXTERNAL_API_URL = "https://degree-nft.vercel.app/";
 
   const { publicKey } = useWallet();
   const navigate = useNavigate();
-
-
-
 
   const {
     connected,
@@ -113,13 +107,12 @@ export function UniversityDashboard() {
       ],
 
       properties: {
-
         creators: [
           {
             universityWalletAddress: `${publicKey.toString()}`,
           },
         ],
-        
+
         files: [
           {
             type: "image/png",
@@ -131,7 +124,6 @@ export function UniversityDashboard() {
     };
   };
 
-  
   const uploadToPinata = async (metadata) => {
     try {
       const response = await axios.post(
@@ -147,14 +139,11 @@ export function UniversityDashboard() {
       );
       setCurrentIpfsHash(response.data.IpfsHash);
       return response.data.IpfsHash;
-      
     } catch (error) {
       console.error("Error uploading to Pinata:", error);
       throw new Error("Failed to upload metadata to IPFS");
     }
   };
-
-
 
   const validateForm = () => {
     // University information validation
@@ -163,10 +152,13 @@ export function UniversityDashboard() {
     // Student information validation
     if (!formData.studentName?.trim()) return "Student name is required";
 
-    if (!formData.studentAddress?.trim() && !isValidPublicKey(formData.studentAddress))
+    if (
+      !formData.studentAddress?.trim() &&
+      !isValidPublicKey(formData.studentAddress)
+    )
       return "Student wallet address is required";
 
-    if (formData.studentAddress === publicKey?.toString() )
+    if (formData.studentAddress === publicKey?.toString())
       return "Student wallet address cannot be the same as the university wallet address";
 
     // Degree information validation
@@ -332,10 +324,6 @@ export function UniversityDashboard() {
     }
   };
 
-
-
-
-
   const createNftAllocation = async (ipfsHash) => {
     const metadataUri = `https://ipfs.io/ipfs/${ipfsHash}`;
 
@@ -352,17 +340,13 @@ export function UniversityDashboard() {
           sellerFeeBasisPoints: 500,
         }
       );
-      console.log("Data Uploaded TO Backend")
+      console.log("Data Uploaded TO Backend");
       return response.data;
-
     } catch (error) {
       console.error("Error creating NFT allocation:", error);
     }
   };
 
-
-
-  
   if (!connected) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center text-center">
@@ -487,7 +471,9 @@ export function UniversityDashboard() {
                 formData.studentAddress &&
                 !isValidPublicKey(formData.studentAddress)
                   ? "Invalid Solana address"
-                  : ( formData.studentAddress === publicKey?.toString() ? "Student wallet address cannot be the same as the university wallet address" : undefined)
+                  : formData.studentAddress === publicKey?.toString()
+                  ? "Student wallet address cannot be the same as the university wallet address"
+                  : undefined
               }
               required
             />
@@ -628,7 +614,7 @@ export function UniversityDashboard() {
         </form>
       </div>
 
-      <div className="rounded-lg border border-gray-700 bg-gray-800/50 p-6">
+      {/* <div className="rounded-lg border border-gray-700 bg-gray-800/50 p-6">
         <h3 className="text-xl font-semibold">Recent Credentials</h3>
         <div className="mt-4 space-y-4">
           {recentCredentials.length > 0 ? (
@@ -673,7 +659,6 @@ export function UniversityDashboard() {
             </div>
           )}
 
-          {/* // And update the link in the JSX: */}
           {mintedNft && (
             <div className="mt-8 p-4 bg-green-50 rounded-lg border border-green-200">
               <h4 className="font-medium text-green-800 flex items-center">
@@ -711,7 +696,11 @@ export function UniversityDashboard() {
             </div>
           )}
         </div>
-      </div>
+      </div> */}
+
+
+
+
     </div>
   );
 }
