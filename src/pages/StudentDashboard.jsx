@@ -795,18 +795,25 @@ import {
 import { shortenAddress } from "../lib/utils";
 import { getExplorerUrl } from "../lib/solana";
 import { Button } from "../components/Button";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 
 const API_BASE_URL = import.meta.env.VITE_APP_SERVER_URL;
 
+const UNIVERSITY_FEES = 0.01;
+
 export function StudentDashboard() {
+  const navigate = useNavigate();
+
   const wallet = useWallet();
   const connection = new Connection(clusterApiUrl("devnet"));
 
   const { connected, publicKey } = wallet;
   const walletAddress = publicKey?.toBase58();
   const toastShownRef = useRef(false);
+  const [walletBalance, setWalletBalance] = useState(null);
+  const [balanceRefreshing, setBalanceRefreshing] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -968,10 +975,13 @@ export function StudentDashboard() {
 
     if (connected && walletAddress) {
       fetchMintedNFTs();
+      checkWalletBalance(); // Initial balance check
+
+      const balanceInterval = setInterval(() => checkWalletBalance(), 5000); // Refresh every 5 seconds
+      return () => clearInterval(balanceInterval); // Cleanup interval
     }
   }, [connected, walletAddress]);
 
-  // Handle confirming the credential data
   const handleConfirm = async () => {
     if (!walletAddress || !nftInfo) return;
 
@@ -1052,11 +1062,46 @@ export function StudentDashboard() {
 
   // Handle Minting using UMI directly in the frontend
   const handleMintNft = async () => {
+    const minimumBalance = 0.01;
+
+    // Check if UMI, publicKey, and nftInfo are available
     if (!umi || !publicKey || !nftInfo || !nftInfo.uri || !nftInfo.name) {
       setMintError(
         "Cannot mint: Missing wallet connection, UMI instance, or NFT metadata"
       );
       toast.error("Missing required information for minting");
+      return;
+    }
+
+    // Check wallet balance & Forward to faucet if insufficient
+    if (walletBalance < minimumBalance) {
+      toast(
+        (t) => (
+          <div className="flex items-center justify-between w-full  p-1">
+            <div className="flex-1" >
+              <p className="font-bold text-red-600">Insufficient Balance</p>
+              <p className="text-m text-black">
+                You need minimum ~{minimumBalance} Devnet SOL for minting. Your
+                balance: {walletBalance} SOL
+              </p>
+            </div>
+
+            <Button
+              onClick={() => {
+                navigate("/faucet");
+                toast.dismiss(t.id);
+              }}
+              className="ml-4 !py-1.5 !px-3 hover:bg-blue-600 bg-blue-500 text-white hover:cursor-pointer"
+            >
+              Go to Faucet
+            </Button>
+          </div>
+        ),
+        {
+          duration: 5000, // Keep toast visible longer
+          id: "insufficient-balance-toast", // Prevent duplicate toasts
+        }
+      );
       return;
     }
 
@@ -1216,7 +1261,8 @@ export function StudentDashboard() {
 
       const response = await axios.post(`${API_BASE_URL}/report-issue`, {
         //  universityWallet: we need to extract this from the NFT uri or metadata. So Do it Later || Done (9.17PM , 19.06.2025)
-        universityWallet: nftUriData.properties.creators[0].universityWalletAddress || "",
+        universityWallet:
+          nftUriData.properties.creators[0].universityWalletAddress || "",
         studentWallet: walletAddress,
         nftIpfsHash: nftInfo.uri,
         reportType: "NFT Credential Issue",
@@ -1250,6 +1296,29 @@ export function StudentDashboard() {
     }
   };
 
+  //Check user current wallet balance
+  const checkWalletBalance = async () => {
+    if (!walletAddress) {
+      toast.error("Wallet not connected");
+      return false;
+    }
+    setBalanceRefreshing(true);
+
+    try {
+      const balanceInLamports = await connection.getBalance(publicKey);
+      const solBalance = balanceInLamports / 1_000_000_000; // Convert lamports to SOL
+      setWalletBalance(solBalance.toFixed(3));
+      return true; // Sufficient balance
+    } catch (error) {
+      console.error("Error checking wallet balance:", error);
+      toast.error("Failed to check wallet balance");
+      setWalletBalance(null);
+      return false;
+    } finally {
+      setBalanceRefreshing(false);
+    }
+  };
+
   // Render loading state for authorization check
   if (isLoading) {
     return (
@@ -1279,13 +1348,28 @@ export function StudentDashboard() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold">Student Dashboard</h2>
-          <p className="mt-1 text-gray-400">
-            Connected as:{" "}
+          <p className="mt-1 text-gray-250">
+            Connected as :{" "}
             <span className="font-mono">
               {shortenAddress(walletAddress || "")}
             </span>
           </p>
+
+          <p className="mt-1 text-gray-250">
+            Wallet Balance :{" "}
+            <span className="font-mono">
+              {balanceRefreshing ? (
+                <>
+                  <Loader2 className="inline-block h-4 w-4 animate-spin" />
+                  ...
+                </>
+              ) : (
+                `${walletBalance} SOL`
+              )}
+            </span>
+          </p>
         </div>
+
         <Button
           onClick={fetchMintedNFTs}
           variant="outline"
