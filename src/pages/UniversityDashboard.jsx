@@ -706,22 +706,6 @@ export function UniversityDashboard() {
 }
 
 
-//             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-//               <Input
-//                 label="CGPA"
-//                 name="cgpa"
-//                 placeholder="e.g. 3.8"
-//                 value={formData.cgpa}
-//                 onChange={handleInputChange}
-//                 required
-//               />
-
-//               <Input
-//                 label="Honors (optional)"
-//                 name="honors"
-//                 placeholder="e.g. Magna Cum Laude"
-//                 value={formData.honors}
-//                 onChange={handleInputChange}
 //               />
 //             </div>
 //           </div>
