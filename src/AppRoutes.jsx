@@ -7,6 +7,7 @@ import { UniversityDashboard } from './pages/UniversityDashboard';
 import { VerificationPortal } from './pages/VerificationPortal';
 import { StudentDashboard } from './pages/StudentDashboard';
 import { BatchUploadPortal } from './pages/BatchUploadPortal';
+import { Faucet } from './pages/Faucet'; 
 
 const AppRoutes = () => {
 
@@ -18,6 +19,9 @@ const AppRoutes = () => {
                 <Route path="/student" element={<StudentDashboard />} />
                 <Route path="/university" element={<UniversityDashboard />} />
                 <Route path="/batch-upload" element={<BatchUploadPortal />} />
+                <Route path="/faucet" element={<Faucet />} />
+
+
                 {/* <Route path="/dashboard" element={<Dashboard />} /> */}
                 {/* <Route path="/mint" element={<MintNFT />} /> */}
                 {/* <Route path="/profile/:id" element={<Profile />} /> */}
