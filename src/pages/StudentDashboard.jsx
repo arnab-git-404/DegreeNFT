@@ -1098,7 +1098,7 @@ export function StudentDashboard() {
           </div>
         ),
         {
-          duration: 5000, // Keep toast visible longer
+          duration: 3000, 
           id: "insufficient-balance-toast", // Prevent duplicate toasts
         }
       );
