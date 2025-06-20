@@ -28,6 +28,7 @@ export function Navbar() {
     { path: "/university", label: "Universities" },
     { path: "/student", label: "Students" },
     { path: "/verify", label: "Verify Credentials" },
+    { path: "/faucet", label: "Faucet" },
   ];
 
   return (
