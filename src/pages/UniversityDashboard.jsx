@@ -9,6 +9,7 @@ import {
   Info,
   HelpCircle,
   ExternalLink,
+  Loader2,
 } from "lucide-react";
 import { shortenAddress } from "../lib/utils";
 import { isValidPublicKey } from "../lib/solana";
@@ -29,6 +30,8 @@ export function UniversityDashboard() {
 
   const { publicKey } = useWallet();
   const navigate = useNavigate();
+
+  const [issuingNftData, setIssuingNftData] = useState(false);
 
   const {
     connected,
@@ -286,6 +289,8 @@ export function UniversityDashboard() {
       return;
     }
 
+
+    setIssuingNftData(true);
     try {
       toast.loading("Creating degree NFT...");
 
@@ -321,11 +326,15 @@ export function UniversityDashboard() {
     } catch (error) {
       console.error("Error issuing degree:", error);
       toast.error(`Failed to issue credential: ${error.message}`);
+    }finally {
+      setIssuingNftData(false);
     }
   };
 
   const createNftAllocation = async (ipfsHash) => {
     const metadataUri = `https://ipfs.io/ipfs/${ipfsHash}`;
+
+
 
     try {
       const response = await axios.post(
@@ -589,8 +598,8 @@ export function UniversityDashboard() {
               }
               className=" hover:cursor-pointer w-full"
             >
-              {isLoading ? (
-                <>Issuing Credential...</>
+              {issuingNftData ? (
+                <> <Loader2 className="mr-2 h-4 w-4 animate-spin" />Issuing Credential...</>
               ) : (
                 <>
                   {/* <Plus className="mr-2 h-4 w-4" /> */}
