@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo, useRef } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Connection, clusterApiUrl } from "@solana/web3.js";
 import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
+import { CredentialCard } from "../components/nft/CredentialCard";
 import { walletAdapterIdentity } from "@metaplex-foundation/umi-signer-wallet-adapters";
 import {
   createNft,
@@ -74,6 +75,11 @@ export function StudentDashboard() {
   const [isSendingIssue, setIsSendingIssue] = useState(false);
   const [alreadyReported, setAlreadyReported] = useState(false);
 
+  // New state for store metadata
+  const [metadataDetails, setMetadataDetails] = useState(null);
+  const [loadingMetadata, setLoadingMetadata] = useState(false);
+
+
   // Initialize UMI when wallet is connected
   const umi = useMemo(() => {
     const umi = createUmi(connection);
@@ -140,11 +146,11 @@ export function StudentDashboard() {
         if (response.data.authorized && response.data.nftInfo) {
           setIsAuthorized(true);
           setNftInfo(response.data.nftInfo);
+          fetchMetadata(response.data.nftInfo.uri);
 
           if (response.data.existingReport) {
             setAlreadyReported(true);
           }
-
           // Set confirmation status and deadline
           if (response.data.nftInfo.confirmationStatus) {
             setIsConfirmed(
@@ -574,6 +580,26 @@ export function StudentDashboard() {
     );
   }
 
+    // Add function to fetch metadata
+  const fetchMetadata = async (uri) => {
+    if (!uri) return;
+    
+    setLoadingMetadata(true);
+    try {
+      const response = await fetch(uri);
+      const data = await response.json();
+      setMetadataDetails(data);
+    } catch (error) {
+      console.error("Error fetching metadata:", error);
+      toast.error("Failed to load credential details");
+    } finally {
+      setLoadingMetadata(false);
+    }
+  };
+
+    // Fetch metadata when nftInfo changes
+
+
   // Render connected state
   return (
     <div className="space-y-8">
@@ -792,7 +818,7 @@ export function StudentDashboard() {
           ) : (
             <>
               {/* View Mode */}
-              <div className="mt-4 space-y-2 text-gray-300">
+              {/* <div className="mt-4 space-y-2 text-gray-300">
                 <p>
                   <span className="font-medium text-gray-100">Name:</span>{" "}
                   {nftInfo.name}
@@ -814,6 +840,96 @@ export function StudentDashboard() {
                     {nftInfo.uri}
                   </a>
                 </p>
+              </div> */}
+
+               <div className="mt-4 space-y-4">
+                {/* Basic NFT Info */}
+                <div className="space-y-2 text-gray-300">
+                  <p>
+                    <span className="font-medium text-gray-100">Name:</span>{" "}
+                    {nftInfo.name}
+                  </p>
+                  <p>
+                    <span className="font-medium text-gray-100">Symbol:</span>{" "}
+                    {nftInfo.symbol || "CRED"}
+                  </p>
+                  <p>
+                    <span className="font-medium text-gray-100">
+                      Metadata URI:
+                    </span>{" "}
+                    <a
+                      href={nftInfo.uri}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline hover:text-indigo-400 break-all cursor-pointer"
+                    >
+                      {nftInfo.uri}
+                    </a>
+                  </p>
+                </div>
+
+                {/* Metadata Details */}
+                {loadingMetadata ? (
+                  <div className="flex items-center justify-center py-4">
+                    <Loader2 className="h-6 w-6 animate-spin text-indigo-500" />
+                    <span className="ml-2 text-gray-400">Loading credential details...</span>
+                  </div>
+                ) : metadataDetails ? (
+                  <div className="mt-6 space-y-6">
+                    {/* Image */}
+                    {metadataDetails.image && (
+                      <div className="rounded-lg overflow-hidden border border-gray-700">
+                        <img
+                          src={metadataDetails.image}
+                          alt={metadataDetails.name}
+                          className="w-full h-64 object-cover"
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                          }}
+                        />
+                      </div>
+                    )}
+
+                    {/* Description */}
+                    {metadataDetails.description && (
+                      <div className="bg-gray-800/50 rounded-lg p-4">
+                        <h4 className="text-sm font-medium text-gray-100 mb-2">Description</h4>
+                        <p className="text-gray-300">{metadataDetails.description}</p>
+                      </div>
+                    )}
+
+                    {/* Attributes */}
+                    {metadataDetails.attributes && metadataDetails.attributes.length > 0 && (
+                      <div className="bg-gray-800/50 rounded-lg p-4">
+                        <h4 className="text-sm font-medium text-gray-100 mb-3">Credential Details</h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                          {metadataDetails.attributes.map((attr, index) => (
+                            <div key={index} className="flex flex-col">
+                              <span className="text-xs text-gray-400">{attr.trait_type}</span>
+                              <span className="text-sm text-gray-200 font-medium">{attr.value}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Additional Properties */}
+                    {metadataDetails.external_url && (
+                      <div className="bg-gray-800/50 rounded-lg p-4">
+                        <h4 className="text-sm font-medium text-gray-100 mb-2">External URL</h4>
+                        <a
+                          href={metadataDetails.external_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-indigo-400 hover:text-indigo-300 underline text-sm flex items-center cursor-pointer"
+                        >
+                          {metadataDetails.external_url}
+                          <ExternalLink className="ml-1 h-3 w-3" />
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                ) : null}
               </div>
 
               <div className="mt-6 flex flex-wrap gap-3">
@@ -938,57 +1054,11 @@ export function StudentDashboard() {
         ) : mintedNfts.length > 0 ? (
           <div className="mt-6 grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {mintedNfts.map((nft, index) => (
-              <div
+              <CredentialCard
                 key={index}
-                className="rounded-lg border border-gray-700 bg-gray-800/60 p-5 hover:border-indigo-600 hover:shadow-md transition-all cursor-pointer"
-              >
-                {nft.image && (
-                  <div className="h-40 w-full overflow-hidden rounded-md mb-4 bg-gray-700/50">
-                    <img
-                      src={nft.image}
-                      alt={nft.name}
-                      className="h-full w-full object-cover"
-                      onError={(e) => {
-                        e.target.src = "/api/placeholder/320/180";
-                        e.target.alt = "Failed to load image";
-                      }}
-                    />
-                  </div>
-                )}
-                <h4 className="text-lg font-medium text-indigo-300">
-                  {nft.name}
-                </h4>
-                <p className="text-sm text-gray-400 mt-1">{nft.symbol}</p>
-
-                {nft.allocatedAt && (
-                  <p className="text-xs text-gray-500 mt-2 flex items-center">
-                    <Calendar className="h-3 w-3 mr-1" />
-                    Issued: {new Date(nft.allocatedAt).toLocaleDateString()}
-                  </p>
-                )}
-
-                {nft.mintedAt && (
-                  <p className="text-xs text-gray-500 mt-2 flex items-center">
-                    <Calendar className="h-3 w-3 mr-1" />
-                    Minted: {new Date(nft.mintedAt).toLocaleDateString()}
-                  </p>
-                )}
-
-                <div className="mt-4 flex space-x-2">
-                  <a
-                    href={getNftExplorerLink(
-                      nft.nftAddress,
-                      nft.signature,
-                      "address"
-                    )}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs text-indigo-400 hover:text-indigo-300 underline flex items-center"
-                  >
-                    View <ExternalLink className="ml-0.5 h-3 w-3" />
-                  </a>
-                </div>
-              </div>
+                nft={nft}
+                getNftExplorerLink={getNftExplorerLink}
+              />
             ))}
           </div>
         ) : (
@@ -1004,6 +1074,8 @@ export function StudentDashboard() {
           </div>
         )}
       </div>
+
+
     </div>
   );
 }
