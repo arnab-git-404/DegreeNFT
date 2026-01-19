@@ -1,5 +1,3 @@
-// 3rd Edition - 8.24AM - 14.03.25
-
 import { useState, useEffect } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import {
