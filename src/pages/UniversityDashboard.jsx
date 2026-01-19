@@ -712,30 +712,3 @@ export function UniversityDashboard() {
   );
 }
 
-
-//               <>Issuing Credential...</>
-//             ) : (
-//               <>
-//                 <Plus className="mr-2 h-4 w-4" />
-//                 Issue Credential
-//               </>
-//             )}
-//           </Button>
-//         </form>
-//       </div>
-
-//       <div className="rounded-lg border border-gray-700 bg-gray-800/50 p-6">
-//         <h3 className="text-xl font-semibold">Recent Credentials</h3>
-//         <div className="mt-4 space-y-4">
-//           <div className="flex items-center justify-between rounded-lg bg-gray-700/50 p-4">
-//             <div>
-//               <p className="font-medium">Bachelor of Computer Science</p>
-//               <p className="text-sm text-gray-400">{shortenAddress('8xyt4aCBQNQs1jHWqRQRVNQCUE1nJD3XAcZCJJKHVp2E')}</p>
-//             </div>
-//             <CheckCircle className="h-5 w-5 text-green-500" />
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }

@@ -79,7 +79,6 @@ export function StudentDashboard() {
   const [metadataDetails, setMetadataDetails] = useState(null);
   const [loadingMetadata, setLoadingMetadata] = useState(false);
 
-
   // Initialize UMI when wallet is connected
   const umi = useMemo(() => {
     const umi = createUmi(connection);
@@ -113,7 +112,7 @@ export function StudentDashboard() {
 
       const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
       const hours = Math.floor(
-        (diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        (diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
       );
       const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
@@ -140,7 +139,7 @@ export function StudentDashboard() {
 
       try {
         const response = await axios.get(
-          `${API_BASE_URL}/check-authorization/${walletAddress}`
+          `${API_BASE_URL}/check-authorization/${walletAddress}`,
         );
 
         if (response.data.authorized && response.data.nftInfo) {
@@ -154,7 +153,7 @@ export function StudentDashboard() {
           // Set confirmation status and deadline
           if (response.data.nftInfo.confirmationStatus) {
             setIsConfirmed(
-              response.data.nftInfo.confirmationStatus === "CONFIRMED"
+              response.data.nftInfo.confirmationStatus === "CONFIRMED",
             );
             setConfirmationDeadline(response.data.confirmationDeadline);
           } else {
@@ -170,7 +169,7 @@ export function StudentDashboard() {
           setIsAuthorized(false);
           setNftInfo(null);
           setAuthorizationError(
-            response.data.message || "No NFT allocation found for this wallet."
+            response.data.message || "No NFT allocation found for this wallet.",
           );
         }
       } catch (error) {
@@ -179,7 +178,7 @@ export function StudentDashboard() {
         setNftInfo(null);
         setAuthorizationError(
           error.response?.data?.message ||
-            "Failed to check authorization. Please try again."
+            "Failed to check authorization. Please try again.",
         );
         toast.error("Failed to check credentials");
       } finally {
@@ -235,7 +234,7 @@ export function StudentDashboard() {
         `${API_BASE_URL}/confirm-nft-credential`,
         {
           walletAddress,
-        }
+        },
       );
 
       if (response.data.success) {
@@ -305,7 +304,7 @@ export function StudentDashboard() {
     // Check if UMI, publicKey, and nftInfo are available
     if (!umi || !publicKey || !nftInfo || !nftInfo.uri || !nftInfo.name) {
       setMintError(
-        "Cannot mint: Missing wallet connection, UMI instance, or NFT metadata"
+        "Cannot mint: Missing wallet connection, UMI instance, or NFT metadata",
       );
       toast.error("Missing required information for minting");
       return;
@@ -316,7 +315,7 @@ export function StudentDashboard() {
       toast(
         (t) => (
           <div className="flex items-center justify-between w-full  p-1">
-            <div className="flex-1" >
+            <div className="flex-1">
               <p className="font-bold text-red-600">Insufficient Balance</p>
               <p className="text-m text-black">
                 You need minimum ~{minimumBalance} Devnet SOL for minting. Your
@@ -336,9 +335,9 @@ export function StudentDashboard() {
           </div>
         ),
         {
-          duration: 3000, 
+          duration: 3000,
           id: "insufficient-balance-toast", // Prevent duplicate toasts
-        }
+        },
       );
       return;
     }
@@ -420,7 +419,7 @@ export function StudentDashboard() {
     setLoadingNfts(true);
     try {
       const response = await axios.get(
-        `${API_BASE_URL}/minted-nfts/${walletAddress}`
+        `${API_BASE_URL}/minted-nfts/${walletAddress}`,
       );
 
       if (response.data.nfts) {
@@ -469,7 +468,7 @@ export function StudentDashboard() {
   const handleReportIssue = () => {
     if (alreadyReported) {
       toast.error(
-        "You've already reported an issue about this credential. Please contact your university for further assistance."
+        "You've already reported an issue about this credential. Please contact your university for further assistance.",
       );
     } else {
       setIsReportingIssue(true);
@@ -509,14 +508,14 @@ export function StudentDashboard() {
 
       console.log(
         "University Wallet:",
-        nftUriData.properties.creators[0].universityWalletAddress
+        nftUriData.properties.creators[0].universityWalletAddress,
       );
 
       // Handle if the user has already reported an issue
       if (response.status === 409) {
         setAlreadyReported(true);
         toast.error(
-          "You have already reported an issue. Please contact your university for further assistance."
+          "You have already reported an issue. Please contact your university for further assistance.",
         );
       } else if (response.data.success) {
         setIsReportingIssue(false);
@@ -580,10 +579,10 @@ export function StudentDashboard() {
     );
   }
 
-    // Add function to fetch metadata
+  // Add function to fetch metadata
   const fetchMetadata = async (uri) => {
     if (!uri) return;
-    
+
     setLoadingMetadata(true);
     try {
       const response = await fetch(uri);
@@ -597,8 +596,7 @@ export function StudentDashboard() {
     }
   };
 
-    // Fetch metadata when nftInfo changes
-
+  // Fetch metadata when nftInfo changes
 
   // Render connected state
   return (
@@ -652,7 +650,7 @@ export function StudentDashboard() {
                   href={getNftExplorerLink(
                     mintedNft.address,
                     mintedNft.signature,
-                    "address"
+                    "address",
                   )}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -842,7 +840,7 @@ export function StudentDashboard() {
                 </p>
               </div> */}
 
-               <div className="mt-4 space-y-4">
+              <div className="mt-4 space-y-4">
                 {/* Basic NFT Info */}
                 <div className="space-y-2 text-gray-300">
                   <p>
@@ -872,7 +870,9 @@ export function StudentDashboard() {
                 {loadingMetadata ? (
                   <div className="flex items-center justify-center py-4">
                     <Loader2 className="h-6 w-6 animate-spin text-indigo-500" />
-                    <span className="ml-2 text-gray-400">Loading credential details...</span>
+                    <span className="ml-2 text-gray-400">
+                      Loading credential details...
+                    </span>
                   </div>
                 ) : metadataDetails ? (
                   <div className="mt-6 space-y-6">
@@ -884,7 +884,7 @@ export function StudentDashboard() {
                           alt={metadataDetails.name}
                           className="w-full h-64 object-cover"
                           onError={(e) => {
-                            e.target.style.display = 'none';
+                            e.target.style.display = "none";
                           }}
                         />
                       </div>
@@ -893,30 +893,43 @@ export function StudentDashboard() {
                     {/* Description */}
                     {metadataDetails.description && (
                       <div className="bg-gray-800/50 rounded-lg p-4">
-                        <h4 className="text-sm font-medium text-gray-100 mb-2">Description</h4>
-                        <p className="text-gray-300">{metadataDetails.description}</p>
+                        <h4 className="text-sm font-medium text-gray-100 mb-2">
+                          Description
+                        </h4>
+                        <p className="text-gray-300">
+                          {metadataDetails.description}
+                        </p>
                       </div>
                     )}
 
                     {/* Attributes */}
-                    {metadataDetails.attributes && metadataDetails.attributes.length > 0 && (
-                      <div className="bg-gray-800/50 rounded-lg p-4">
-                        <h4 className="text-sm font-medium text-gray-100 mb-3">Credential Details</h4>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                          {metadataDetails.attributes.map((attr, index) => (
-                            <div key={index} className="flex flex-col">
-                              <span className="text-xs text-gray-400">{attr.trait_type}</span>
-                              <span className="text-sm text-gray-200 font-medium">{attr.value}</span>
-                            </div>
-                          ))}
+                    {metadataDetails.attributes &&
+                      metadataDetails.attributes.length > 0 && (
+                        <div className="bg-gray-800/50 rounded-lg p-4">
+                          <h4 className="text-sm font-medium text-gray-100 mb-3">
+                            Credential Details
+                          </h4>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            {metadataDetails.attributes.map((attr, index) => (
+                              <div key={index} className="flex flex-col">
+                                <span className="text-xs text-gray-400">
+                                  {attr.trait_type}
+                                </span>
+                                <span className="text-sm text-gray-200 font-medium">
+                                  {attr.value}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
 
                     {/* Additional Properties */}
                     {metadataDetails.external_url && (
                       <div className="bg-gray-800/50 rounded-lg p-4">
-                        <h4 className="text-sm font-medium text-gray-100 mb-2">External URL</h4>
+                        <h4 className="text-sm font-medium text-gray-100 mb-2">
+                          External URL
+                        </h4>
                         <a
                           href={metadataDetails.external_url}
                           target="_blank"
@@ -1074,8 +1087,6 @@ export function StudentDashboard() {
           </div>
         )}
       </div>
-
-
     </div>
   );
 }
